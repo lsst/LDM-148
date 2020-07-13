@@ -533,7 +533,7 @@ EFD Transformer to Data Backbone: Transformed EFD entries are inserted
 into the ``Transformed EFD'' database resident within the Data Backbone.
 
 Camera Data System to Archiver, Catch-Up Archiver, Prompt Processing
-Ingest: these interface through the custom library provided by the
+Ingest: these interface via the Camera Image Writer component of the Camera Control System or through the custom library provided by the
 Camera Data System.
 
 Prompt Processing Ingest to Prompt Processing: BBFTP is used to transfer
@@ -545,7 +545,7 @@ used to transfer execution instructions
 from the control service to the batch service, whether to the Commissioning Cluster or over the international network to the Offline Production Enclave, and return status and
 result information.
 
-Telemetry Gateway from Prompt US Enclave services: RabbitMQ is
+Telemetry Gateway from Prompt US Enclave services: RabbitMQ or Kafka are
 used to transfer status and quality metrics to the gateway over the
 international network.
 

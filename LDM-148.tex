@@ -149,7 +149,7 @@ NCSA.
 The DACs are a key component of the DMS, giving the community resources and an
 interface to interact with and utilize the LSST data products to perform
 science.  An instance of the LSST Science Platform (LSP) is deployed in each
-DAC to support science users with its Portal, JupyterLab (notebook), and Web
+DAC to support science users with its Portal, Notebook, and Web
 API aspects.  Substantial compute, storage, and storage bandwidth is devoted to
 ensuring that the LSP is responsive and allows for exploration of the vast
 LSST data products.
@@ -252,7 +252,7 @@ enclave they are in noted):
 \item
   LSST Science Platform Portal (Commissioning Cluster and DACs)
 \item
-  LSST Science Platform JupyterLab (Commissioning Cluster and DACs)
+  LSST Science Platform Notebook (Commissioning Cluster and DACs)
 \item
   LSST Science Platform Web API (Commissioning Cluster and DACs)
 \end{itemize}
@@ -800,8 +800,8 @@ users can take advantage of, as illustrated in Figure~\ref{fig:lsp}.
 \end{figure}
 
 The ``Portal'' Aspect provides a pre-specified yet flexible discovery,
-query, and viewing tool. The ``JupyterLab'' Aspect provides a fully
-flexible (``notebook'') environment incorporating rendering of images,
+query, and viewing tool. The ``Notebook'' Aspect provides a fully
+flexible environment incorporating rendering of images,
 catalogs, and plots and providing for execution of LSST-provided and
 custom algorithms. The ``Web API'' Aspect provides a
 language-independent, VO-compliant Web Services data access API with
@@ -830,7 +830,7 @@ operations staff.
 LSST Science Platform to Data Backbone: the LSP services retrieve their data, including raw images, nightly and
 annual image and catalog data products, metadata, and provenance, from the Data
 Backbone.  The LSP Portal Aspect uses the LSP Web APIs to retrieve data.  The
-LSP JupyterLab Aspect can use the LSP Web APIs and also can use the Data Butler
+LSP Notebook Aspect can use the LSP Web APIs and also can use the Data Butler
 client library to access the Data Backbone.
 
 
@@ -1038,7 +1038,7 @@ configured at runtime with a variety of back-ends ranging from local
 disk to network locations and a variety of serializations ranging from
 YAML and FITS files (extensible to HDF5 or ASDF) to database tables. The
 Butler client is also available within the LSST Science Platform
-JupyterLab environment.
+Notebook environment.
 
 \subsubsection{Task Framework}\label{task-framework}
 
@@ -1187,7 +1187,7 @@ Products, and Data Release Productions. It is optimized for usage by
 scientists within the LSST Operations team, although selected external
 scientists can be granted access to assist with Science Validation. Part
 of the optimization is to size and configure the three Aspects of the
-LSP appropriately; in particular, more JupyterLab usage and less portal
+LSP appropriately; in particular, more notebook usage and less portal
 usage is expected.
 
 \subsubsection{Developer Services}\label{developer-services}

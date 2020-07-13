@@ -59,7 +59,7 @@ major categories.
 
 One category of data products is generated on a nightly or daily cadence
 and comprises raw, processed/calibrated, and difference images as well as alerts
-of transient, moving, and variable objects detected from the images,
+of transient, Solar System, and variable objects detected from the images,
 published within 60 seconds, and recorded in searchable catalogs. These
 data products can be considered ``online'', as they are driven primarily
 by the observing cadence of the observatory. This category of Prompt data products has
@@ -686,7 +686,7 @@ It can allocate work across multiple enclaves, in particular between the US Data
 It utilizes the Campaign Management and Workload/Workflow Management software products to accomplish these goals.
 
 Offline processing ensures that Prompt data products are generated within the nominal 24 hours.
-It includes catch-up of missed nightly processing as well as daytime processing such as the Moving Object Processing System.
+It includes catch-up of missed nightly processing as well as daytime processing such as the Solar System Processing System.
 
 Calibration Products Production campaigns execute various CPP science payloads at intervals to
 generate Master Calibration Images and other Calibration Products
@@ -970,10 +970,10 @@ first running a ``mini-DRP'' over a small portion of the sky, followed
 by the full DRP over the entire sky. Produces science data products in
 the Data Backbone.
 
-\subsubsection{MOPS and Forced Photometry Payload}\label{mops-payload}
+\subsubsection{Solar System and Forced Photometry Payload}\label{solar-system-payload}
 
 Executes after a night's
-observations are complete. Generates entries in the MOPS Database and
+observations are complete. Generates entries in the Solar System Database and
 the Prompt Products Database, including Solar System Object records,
 measurements, and orbits. Performs precovery forced photometry of
 transients. Uses Prompt Products Database entries and images from the Data

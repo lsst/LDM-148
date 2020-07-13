@@ -143,8 +143,7 @@ require daily, monthly, and annual calibration productions.  The daily
 production must be synchronized with the observatory schedule, occurring after
 raw calibration frames have been taken but well before science observing is
 planned.  This requirement necessitates the inclusion of a service that allows
-the Observatory Control System to trigger remote calibration processing at
-NCSA.
+the Observatory Control System to trigger pipeline processing.
 
 The DACs are a key component of the DMS, giving the community resources and an
 interface to interact with and utilize the LSST data products to perform
@@ -232,7 +231,7 @@ enclave they are in noted):
 \item
   Observatory Operations Data (Prompt Base)
 \item
-  Observatory Control System (OCS) Driven Batch (Prompt Base)
+  Observatory Control System (OCS) Controlled Pipeline (Prompt Base)
 \item
   Telemetry Gateway (Prompt Base)
 \item
@@ -412,11 +411,11 @@ Since these services are part of the normal functioning of the Observatory, they
 
 Of the services within the enclave, the Header Generator component of the Archiving service is critical to observing and should have a target uptime equal to the Engineering and Facility Database.
 
-The Archiving, Observatory Operations Data, OCS Driven Batch, Prompt Processing Ingest, and Telemetry Gateway services are important for maintaining high-quality observing; lack of these services constitutes a degraded mode of operation without useful feedback loops.
+The Archiving, Observatory Operations Data, OCS Controlled Pipeline, Prompt Processing Ingest, and Telemetry Gateway services are important for maintaining high-quality observing; lack of these services constitutes a degraded mode of operation without useful feedback loops.
 Downtime, defined as when observing is occurring but one or more of these services is unavailable, must be limited in both length and frequency.
 There are daily and annual observatory scheduled maintenance periods during which no observing occurs; accordingly, these services do not need to remain available during these periods.
-During normal observing, the stability of the telescope systems is expected to allow at most 24 consecutive hours of downtime during any single incident for the Archiving, Observatory Operations Data and OCS Driven Batch services.
-(This might require reconfiguring OCS Driven Batch to execute on the Commissioning Cluster rather than in the Offline Production enclave.)
+During normal observing, the stability of the telescope systems is expected to allow at most 24 consecutive hours of downtime during any single incident for the Archiving, Observatory Operations Data and OCS Controlled Pipeline services.
+(This might require reconfiguring OCS Controlled Pipeline to execute on the Commissioning Cluster rather than in the Offline Production enclave.)
 Similarly, DMS-REQ-0008 requires that the pipelines fed by Prompt Processing Ingest and producing output via the Telemetry Gateway be down for no more than 24 hours at a time.
 These services must be available for at least 24 continuous hours out of any 48 hour period in order to maintain optimal Observatory scientific performance.
 
@@ -488,14 +487,13 @@ It maintains a higher level of service availability than the Data Backbone.
 After images, files, and metadata are ingested, they remain available through the OODS for a policy-configured amount of time.
 Files stored in the OODS include raw images from the Camera as well as master calibration images from the Calibration Products Production payloads, intended for use by the Active Optics and Guider components of the Telescope and Site subsystem.
 
-\subsubsection{OCS Driven Batch}\label{ocs-driven-batch}
+\subsubsection{OCS Controlled Pipeline}\label{ocs-controlled-pipeline}
 
-This service receives commands from the OCS and invokes a Batch Computing service to execute configured science payloads.
+This service (OCPS) receives commands from the OCS and invokes a Batch Computing service to execute configured science payloads.
 The service can be configured to execute on the Commissioning Cluster at the Base or in the Offline Production Enclave at NCSA.
-It is used for modest-latency analysis of images during Commissioning and for processing daily calibration images in normal observing operations.
-Images and metadata are taken from the Data Backbone, and results are provided back to the Data Backbone; there is no direct connection from this service to the Camera Data System.
-This obviously bounds the minimum latency from image acquisition to processing start by the latency of the Archiving service and Data Backbone transfer.
-A summary status for the processing performed is sent to the OCS Driven Batch Control service to be returned to the OCS.
+It is used for modest-latency automated analysis of images during Commissioning and for processing daily calibration images in normal observing operations, under the control of an observing script.
+Images and metadata are taken from the OODS or Data Backbone, and results are provided back to the OODS if temporary or the Data Backbone if permanent; there is no direct connection from this service to the Camera Data System.
+A summary status for the processing performed is sent to the OCS Controlled Pipeline Service to be returned to the OCS.
 
 \subsubsection{Telemetry Gateway}\label{telemetry-gateway}
 
@@ -542,7 +540,7 @@ Prompt Processing Ingest to Prompt Processing: BBFTP is used to transfer
 files over the international network from the ingest service to the
 processing service.
 
-OCS Driven Batch to Batch Computing: HTCondor is
+OCS Controlled Pipeline to Batch Computing: HTCondor is
 used to transfer execution instructions
 from the control service to the batch service, whether to the Commissioning Cluster or over the international network to the Offline Production Enclave, and return status and
 result information.

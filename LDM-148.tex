@@ -943,6 +943,7 @@ Exceptions include the Alert Production Payload and some of the Calibration Soft
 
 \subsubsection{Alert Production Payload}\label{alert-production-payload}
 
+Described in sections 3.1 to 3.3 of \citedsp{LDM-151}.
 Executes under control of the Prompt Processing service. Generates all
 Prompt science data products including Alerts (with the exception of
 Solar System object orbits) and loads them into the Data Backbone and
@@ -955,6 +956,7 @@ Calibration Products information from the Data Backbone.
 
 \subsubsection{Calibration Software}\label{calibration-software-payload}
 
+Described in Section 4 of \citedsp{LDM-151}.
 Executes under control of the Prompt Processing service, OCS-controlled batch processing, and offline batch production at intervals ranging from per-exposure to daily to annual, depending on the stability of Observatory systems and their calibrations.
 Generates all Calibration Products.
 Provides raw calibration image quality feedback to the OCS and observers via the
@@ -965,6 +967,7 @@ Calibration Images from the Data Backbone and EFD information from EFD Transform
 \subsubsection{Data Release Production
 Payload}\label{data-release-production-payload}
 
+Described in Section 5 of \citedsp{LDM-151}.
 Executes at annual intervals,
 first running a ``mini-DRP'' over a small portion of the sky, followed
 by the full DRP over the entire sky. Produces science data products in
@@ -972,6 +975,7 @@ the Data Backbone.
 
 \subsubsection{Solar System and Forced Photometry Payload}\label{solar-system-payload}
 
+Described in Sections 3.4 and 3.5 of \citedsp{LDM-151}.
 Executes after a night's
 observations are complete. Generates entries in the Solar System Database and
 the Prompt Products Database, including Solar System Object records,
@@ -982,12 +986,14 @@ Backbone.
 \subsubsection{Special Programs Productions
 Payload}\label{special-programs-productions-payload}
 
+Composed of components from Sections 6 and 7 of \citedsp{LDM-151}.
 Executes at program-defined intervals.
 Uses raw science images to generate special programs science data products, placing them in the Data Backbone.
 
 \subsubsection{Template Generation
 Payload}\label{template-generation-payload}
 
+Described in Section 5.2.4 of \citedsp{LDM-151}.
 Executes if necessary to generate templates for Alert Production in between annual
 Data Release Productions. Uses raw science images to generate the
 templates, placing them in the Data Backbone.

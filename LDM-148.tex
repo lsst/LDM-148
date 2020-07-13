@@ -50,7 +50,7 @@ products to the observatory's users and to support observatory operations.  The
 DMS is a set of services employing a variety of software components running on
 computational and networking infrastructure.  The DMS is constructed by the DM
 subsystem in the NSF MREFC project; in the Operations era, it is operated by a
-combination of the LSST Data Facility, Science Operations, and Observatory
+combination of the Data Production, Science Operations, and Observatory
 Operations departments.
 
 The data products to be delivered are defined and described in the \textit{Data
@@ -124,10 +124,10 @@ long-haul networking from the Summit at Cerro Pachon to the Base in La Serena an
 resources necessary for promptly processing incoming images to be located in
 cost-effective locations: the Base has far fewer limitations on power, cooling,
 and rack space capacity than the Summit, and placing the scientific
-processing at NCSA allows for far greater flexibility in the allocation of
-resources to ensure that deadlines are met. Performing cross-talk correction
-on the data in the data acquisition system and parallelizing the alert
-processing at the amplifier and CCD levels, where possible, also help to
+processing at the US Data Facility allows for far greater flexibility in the allocation of
+resources to ensure that deadlines are met.
+Parallelizing the alert
+processing at the amplifier and CCD levels, where possible, also helps to
 minimize the latency to alert delivery.
 
 The Data Release processing requires extensive computation, combining
@@ -135,7 +135,7 @@ information from all images of an object in order to measure it as
 accurately as possible.  A sophisticated workload and workflow management
 system and Task Framework are used to divide the processing into
 manageable units of work that can be assigned to available resources,
-including the two dedicated processing clusters at NCSA and CC-IN2P3.
+including the dedicated processing clusters at the US Data Facility and Satellite Facility.
 
 Calibration Products must be created and updated at cadences in between
 the Alert and Data Release periods.  The stability of the system is expected to
@@ -195,16 +195,16 @@ environment. The detailed design of components in this tier is given in
 The DMS computing environments reside in four main physical locations:
 the Summit Site including the main Observatory and Auxiliary Telescope
 buildings on Cerro Pachon, Chile; the Base Facility data center located
-at the Base Site in La Serena, Chile; the NCSA Facility data center
+at the Base Site in La Serena, Chile; the US Data Facility data center
 at the National Center for Supercomputing Applications (NCSA) in Urbana,
-Illinois, USA; and the Satellite Facility at CC-IN2P3 in Lyon,
+Illinois, USA; and a Satellite Facility at CC-IN2P3 in Lyon,
 France. These are linked by high-speed networks to allow rapid data
 movement.
 These computing environments are separated into enclaves by their requirements for availability, access, and change management.
 
 The Base Facility includes four enclaves: the Base portion of the Prompt Enclave directly supporting Observatory operations, the Commissioning Cluster, an Archive Enclave holding data products, and the Chilean Data Access Center.
 
-The NCSA Facility also includes four enclaves: the NCSA portion of the Prompt Enclave, the Offline Production Enclave hosting all offline "data release" and calibration activities, another Archive Enclave, and the US Data Access Center.
+The US Data Facility also includes four enclaves: the US portion of the Prompt Enclave, the Offline Production Enclave hosting all offline "data release" and calibration activities, another Archive Enclave, and the US Data Access Center.
 
 Additionally, a separate Development and Integration Enclave at NCSA hosts many of the services and tools necessary to build and test the DMS.
 
@@ -235,11 +235,11 @@ enclave they are in noted):
 \item
   Telemetry Gateway (Prompt Base)
 \item
-  Prompt Processing (Prompt NCSA)
+  Prompt Processing (Prompt US)
 \item
-  Alert Distribution (Prompt NCSA)
+  Alert Distribution (Prompt US)
 \item
-  Prompt Quality Control (QC) (Prompt NCSA)
+  Prompt Quality Control (QC) (Prompt US)
 \item
   Batch Production (Offline Production, Satellite Facility)
 \item
@@ -247,7 +247,7 @@ enclave they are in noted):
 \item
   Bulk Distribution (Offline Production)
 \item
-  Data Backbone (Archive Base and NCSA)
+  Data Backbone (Archive Base and US)
 \item
   LSST Science Platform Portal (Commissioning Cluster and DACs)
 \item
@@ -387,16 +387,16 @@ are illustrated in Figure~\ref{fig:mwandinfra}.
 Services located in this enclave are located at the Base solely because
 they must interact with the OCS or the Camera Data System (also known as
 the Camera DAQ) or both. In several cases, services located here
-interact closely with corresponding services in the Prompt NCSA Enclave,
+interact closely with corresponding services in the Prompt US Enclave,
 to the point where the Base service cannot function if the
-NCSA service is not operational. This reliance has been taken into
+US service is not operational. This reliance has been taken into
 account in the fault tolerance strategies used.
 
 The primary goals of the services in this enclave are to transfer data
-to appropriate locations, either to NCSA, from NCSA, or to the Data
+to appropriate locations, either to the US, from the US, or to the Data
 Backbone.
 
-The services in this enclave and their partners in the Prompt NCSA Enclave
+The services in this enclave and their partners in the Prompt US Enclave
 need to run rapidly and reliably. They run at times
 (outside office hours) and with latencies that are not amenable to a
 human-in-the-loop design. Instead, they are designed to execute
@@ -475,7 +475,7 @@ It publishes these as an unauthenticated, globally-accessible web service compri
 This component is composed of two instances that capture
 raw images from the LSSTCam and ComCam Camera Data
 Systems along with selected metadata from the OCS and/or EFD and
-transfer them to the Prompt Processing service in the Prompt NCSA Enclave.
+transfer them to the Prompt Processing service in the Prompt US Enclave.
 
 There is no Prompt Processing Ingest instance for the auxiliary
 telescope spectrograph.
@@ -490,14 +490,14 @@ Files stored in the OODS include raw images from the Camera as well as master ca
 \subsubsection{OCS Controlled Pipeline}\label{ocs-controlled-pipeline}
 
 This service (OCPS) receives commands from the OCS and invokes a Batch Computing service to execute configured science payloads.
-The service can be configured to execute on the Commissioning Cluster at the Base or in the Offline Production Enclave at NCSA.
+The service can be configured to execute on the Commissioning Cluster at the Base or in the Offline Production Enclave at the US Data Facility.
 It is used for modest-latency automated analysis of images during Commissioning and for processing daily calibration images in normal observing operations, under the control of an observing script.
 Images and metadata are taken from the OODS or Data Backbone, and results are provided back to the OODS if temporary or the Data Backbone if permanent; there is no direct connection from this service to the Camera Data System.
 A summary status for the processing performed is sent to the OCS Controlled Pipeline Service to be returned to the OCS.
 
 \subsubsection{Telemetry Gateway}\label{telemetry-gateway}
 
-This service obtains information from the Prompt NCSA Enclave,
+This service obtains information from the Prompt US Enclave,
 particularly status and quality metrics from Prompt Processing of images
 and the Prompt Quality Control service, and transmits it to the OCS as
 specified in the \textit{Data Management-OCS Software Communication Interface}
@@ -545,11 +545,11 @@ used to transfer execution instructions
 from the control service to the batch service, whether to the Commissioning Cluster or over the international network to the Offline Production Enclave, and return status and
 result information.
 
-Telemetry Gateway from Prompt NCSA Enclave services: RabbitMQ is
+Telemetry Gateway from Prompt US Enclave services: RabbitMQ is
 used to transfer status and quality metrics to the gateway over the
 international network.
 
-\section{Prompt NCSA Enclave}\label{prompt-ncsa-enclave}
+\section{Prompt US Enclave}\label{prompt-us-enclave}
 
 This enclave is responsible for the compute-intensive processing for all
 near-realtime operations and other operations closely tied with the
@@ -574,7 +574,7 @@ The services in this enclave are important parts of the observing feedback syste
 They should be down (while observing is taking place) for no more than 24 hours at a time (DMS-REQ-0008), although additional downtime adding up to no more than 1 day per year (DMS-REQ-0318) can be tolerated.
 Latency for services in this enclave must be low in order to meet the 60 second alert delivery requirement.
 
-\subsection{Service Descriptions}\label{prompt-ncsa-service-descriptions}
+\subsection{Service Descriptions}\label{prompt-us-service-descriptions}
 
 Detailed concepts of operations for each service can be found in
 \textit{Concept of Operations for the LSST Production Services} \citedsp{LDM-230}.
@@ -617,7 +617,7 @@ Alarms stemming from threshold crossings are delivered to Observatory
 operators and to LSST Data Facility Production Scientists for
 verification, analysis, and resolution.
 
-\subsection{Interfaces}\label{prompt-ncsa-interfaces}
+\subsection{Interfaces}\label{prompt-us-interfaces}
 
 Prompt Processing to Alert Distribution: these
 interface through a reliable transport system.
@@ -665,7 +665,7 @@ This is expected to allow no more than 1 week of integrated scheduled or unsched
 Because the total capacity of this enclave is needed in order to provide the throughput necessary to complete the productions in the allotted time, any outage that decreases capacity is relevant, even if it occurs as part of a rolling maintenance in which services remain running.
 There are no particular latency requirements for services in this enclave, other than what is necessary in order to meet the periodic Calibration Products and annual Data Release cycles.
 
-\subsection{Service Descriptions}\label{ncsa-gen-prod-service-descriptions}
+\subsection{Service Descriptions}\label{us-gen-prod-service-descriptions}
 
 \subsubsection{Batch Production}\label{batch-production}
 
@@ -682,7 +682,7 @@ These include:
 
 The service is able to handle massively distributed computing, executing jobs when their inputs become available and tracking their status and outputs.
 It ensures that the data needed for a job is accessible to it and that outputs (including log files, if any) are preserved.
-It can allocate work across multiple enclaves, in particular between NCSA and the Satellite Facility at CC-IN2P3, which will have capacity for half of the DRP processing.
+It can allocate work across multiple enclaves, in particular between the US Data Facility and the Satellite Facility, each of which will have capacity for half of the DRP processing.
 It utilizes the Campaign Management and Workload/Workflow Management software products to accomplish these goals.
 
 Offline processing ensures that Prompt data products are generated within the nominal 24 hours.
@@ -745,7 +745,7 @@ This service is used to transmit Prompt and Data Release data products to partne
 It extracts data products from the Data Backbone and transmits them over high bandwidth connections to designated, pre-subscribed partners.
 
 
-\subsection{Interfaces}\label{ncsa-general-production-interfaces}
+\subsection{Interfaces}\label{us-general-production-interfaces}
 
 Batch Production to Data Backbone: for large-scale productions, a workflow
 system is expected to stage files and selected database entries from the
@@ -764,7 +764,7 @@ large-scale data distribution is TBD.
 
 \section{Data Access Centers}\label{data-access-centers}
 
-There are two Data Access Centers, one in the US at NCSA and one in
+There are two Data Access Centers, one in the US at the US Data Facility and one in
 Chile at the Base. These DACs are responsible for all
 science-user-facing services, primarily instances of the LSST Science
 Platform (LSP). The LSP is the preferred analytic interface to LSST data
@@ -883,7 +883,7 @@ Availability is primarily set by the need to support the Data Access Centers' 98
 \subsection{Service Descriptions}\label{backbone-service-descriptions}
 
 The Data Backbone (DBB) is a key component that provides for data storage, transport, and replication, allowing data products to move between enclaves.
-This service provides policy-based replication of files (including images and flat files to be loaded into databases as well as other raw and intermediate files) and databases (including metadata about files as well as other miscellaneous databases but not including the large Data Release catalogs) across multiple physical locations, including the Base, Commissioning Cluster, NCSA, and DACs.
+This service provides policy-based replication of files (including images and flat files to be loaded into databases as well as other raw and intermediate files) and databases (including metadata about files as well as other miscellaneous databases but not including the large Data Release catalogs) across multiple physical locations, including the Base, Commissioning Cluster, US Data Facility, and DACs.
 It manages caches of files at each endpoint as well as persistence to long-term archival storage (e.g. tape).
 It provides a registration mechanism for new datasets and database entries and a retrieval mechanism compatible with the Data Butler.
 
@@ -1138,7 +1138,7 @@ any DMS component, especially the LSST Science Platform instances.
 
 \subsubsection{ITC Provisioning and Management}\label{itc-provisioning-management}
 
-This service provides for acquisition, change and configuration management, and provisioning of information technology components, whether purchased ``bare metal'', provided by the NCSA Commons, or provided by agreements with outside providers.
+This service provides for acquisition, change and configuration management, and provisioning of information technology components, whether purchased ``bare metal'', shared with other projects at the US Data Facility, or provided by agreements with outside providers.
 
 This service includes deployment of non-containerized services.
 For example, many of the services at the Base Facility are not highly dynamic or flexible, as they primarily provide interfacing to the OCS and Camera Data System.
@@ -1156,7 +1156,7 @@ Service monitoring reports in dashboard and document form on the health and stat
 The infrastructure services generally interact with all other deployed
 services.
 
-Identity management instances are present in the Base Center and at NCSA.
+Identity management instances are present in the Base Center and at the US Data Facility.
 (Another replica will be maintained at the Summit.)  These are used to support
 authentication and authorization for the other physically co-located environments:
 the Commissioning Cluster and the two Data Access Centers.

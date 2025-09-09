@@ -1,3 +1,6 @@
+*.xdv
+meta.tex
+authors.tex
 _build
 *.aux
 *.bbl

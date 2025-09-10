@@ -896,7 +896,7 @@ client access to the Base replica of the EFD (before transformation).
 
 Detailed concepts of operations for each service can be found in \textit{Concept of Operations for the LSST Production Services} \citedsp{LDM-230}.
 
-The Backbone enclaves supply data to other services.
+The Backbone services supply data to other services and are implemented in the Archive enclaves.
 As a result, the availability and latency requirements of the enclaves are constrained by those of the services it feeds.
 In general, the system has been designed so that the Data Backbone is not essential for normal Observatory data-taking.
 Latency requirements are thus loose, with permissible worst-case delivery times of up to 24 hours, although shorter normal-case latencies on the order of seconds are desirable for staff and science users alike.
